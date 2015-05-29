@@ -1,41 +1,34 @@
 # == Class: etchosts
 #
-# Full description of class etchosts here.
-#
-# === Parameters
-#
-# Document parameters here.
-#
-# [*sample_parameter*]
-#   Explanation of what this parameter affects and what it defaults to.
-#   e.g. "Specify one or more upstream ntp servers as an array."
-#
-# === Variables
-#
-# Here you should define a list of variables that this module would require.
-#
-# [*sample_variable*]
-#   Explanation of how this variable affects the function of this class and if
-#   it has a default. e.g. "The parameter enc_ntp_servers must be set by the
-#   External Node Classifier as a comma separated list of hostnames." (Note,
-#   global variables should be avoided in favor of class parameters as
-#   of Puppet 2.6.)
+# Create an `/etc/hosts` file based on exported resources
 #
 # === Examples
 #
-#  class { 'etchosts':
-#    servers => [ 'pool.ntp.org', 'ntp.local.company.com' ],
-#  }
+# On the system to have the `/etc/hosts` file:
+#
+# class {'etchosts': }
+#
+# On each system to be included in the `/etc/hosts` file
+#
+# class { 'etchosts::client': }
+#
 #
 # === Authors
 #
-# Author Name <author@domain.com>
+# Chris Cowley <chris@chriscowley.me.uk>
 #
 # === Copyright
 #
-# Copyright 2015 Your name here, unless otherwise noted.
+# Copyright 2015
 #
 class etchosts {
-
-
+  concat { '/etc/hosts':
+    ensure => present,
+  }
+  concat::fragment {'etchostsheader':
+    target  => '/etc/hosts',
+    content => '# File controlled by Puppet, changes will be overwritten',
+    order   => '01',
+  }
+  Concat::Fragment <<| tag == 'hostsentries' |>>
 }
