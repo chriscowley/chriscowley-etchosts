@@ -34,7 +34,7 @@ class etchosts (
   }
   concat::fragment {'etchostsheader':
     target  => '/etc/hosts',
-    source  => 'puppet://modules/etchosts/hosts-header'
+    source  => 'puppet://modules/etchosts/hosts-header',
     order   => '01',
   }
   Concat::Fragment <<| tag == 'hostsentries' |>>
