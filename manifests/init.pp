@@ -21,7 +21,14 @@
 #
 # Copyright 2015
 #
-class etchosts {
+class etchosts (
+  $manage_ruby = $::etchosts::params::manage_ruby,
+) inherits etchosts::params {
+  if $manage_ruby == true {
+    package { 'ruby':
+      ensure => installed,
+    }
+  }
   concat { '/etc/hosts':
     ensure => present,
   }
@@ -31,4 +38,4 @@ class etchosts {
     order   => '01',
   }
   Concat::Fragment <<| tag == 'hostsentries' |>>
-}
+} 
