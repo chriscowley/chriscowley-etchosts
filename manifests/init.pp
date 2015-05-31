@@ -22,7 +22,7 @@
 # Copyright 2015
 #
 class etchosts (
-  $manage_ruby = ${etchosts::params::manage_ruby},
+  $manage_ruby = $etchosts::params::manage_ruby,
 ) inherits etchosts::params {
   if $manage_ruby == true {
     package { 'ruby':
