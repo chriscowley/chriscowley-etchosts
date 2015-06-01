@@ -6,7 +6,7 @@
 class etchosts::client {
   @@concat::fragment { "hostsentry_${::hostname}":
     target  => '/etc/hosts',
-    content => "${::ipaddress} ${::fqdn} ${::hostname}",
+    content => "${::ipaddress} ${::fqdn} ${::hostname}\n",
     tag     => 'hostsentries',
   }
 }
