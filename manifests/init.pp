@@ -30,6 +30,7 @@ class etchosts (
     }
   }
   concat { '/etc/hosts':
+    backup => true,
     ensure => present,
   }
   concat::fragment {'etchostsheader':
